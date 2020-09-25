@@ -1,0 +1,48 @@
+# Documentations on https://golangci-lint.run/usage/configuration/#config-file
+run:
+  timeout: 1m
+  issues-exit-code: 1
+  tests: true
+  skip-dirs:
+    - bin
+    - third_party
+    - vendor
+    - scripts
+  skip-files:
+    - \.pb\.go$
+    - \.pb\.gw\.go$
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters-settings:
+  dupl:
+    threshold: 100
+  gofmt:
+    simplify: true
+  govet:
+    check-shadowing: true
+  golint:
+    min-confidence: 0.8
+  goconst:
+    min-len:         3
+    min-occurrences: 3
+
+linters:
+  disable-all: true
+  enable:
+    - golint
+    - errcheck
+    - deadcode
+    - structcheck
+    - varcheck
+    - ineffassign
+    - typecheck
+    - dupl
+    - goconst
+    - gosec
+
+issues:
+  exclude-use-default: false

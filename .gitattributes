@@ -1,0 +1,3 @@
+*.pb.go -diff
+go.sum -diff
+**/mocks/** -diff

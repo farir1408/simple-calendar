@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package calendarpb;
+
+option go_package = "calendarpb";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        version: "1.0";
+    };
+    external_docs: {
+        url: "https://github.com/farir1408/simple-calendar";
+        description: "calendar-api repository";
+    }
+};
+
+service Calendar {
+    rpc NewEvent(NewEventRequest) returns (NewEventResponse) {
+        option(google.api.http) = {
+            post: "/v1/calendar/events"
+            body: "*"
+        };
+    }
+    rpc GetEvent(GetEventRequest) returns (GetEventResponse) {
+        option(google.api.http) = {
+            get: "/v1/calendar/events/{event_id}"
+        };
+    }
+    rpc UpdateEvent(UpdateEventRequest) returns (UpdateEventResponse) {
+        option(google.api.http) = {
+            post: "/v1/calendar/events/{event_id}"
+            body: "*"
+        };
+    }
+    rpc DeleteEvent(DeleteEventRequest) returns (DeleteEventResponse) {
+        option(google.api.http) = {
+            delete: "/v1/calendar/events/{event_id}"
+        };
+    }
+}
+
+message NewEventRequest {
+    string title = 1;
+    string description = 2;
+    uint64 user_id = 3;
+    google.protobuf.Timestamp start_at = 4;
+    google.protobuf.Duration duration = 5;
+}
+
+message NewEventResponse {
+    uint64 id = 1;
+}
+
+message GetEventRequest {
+    uint64 event_id = 1;
+}
+
+message GetEventResponse {
+    Event item = 1;
+}
+
+message Event {
+    uint64 id = 1;
+    string title = 2;
+    string description = 3;
+    uint64 user_id = 4;
+    google.protobuf.Timestamp start_at = 5;
+    google.protobuf.Duration duration = 6;
+}
+
+message UpdateEventRequest {
+    uint64 event_id = 1;
+    string title = 2;
+    string description = 3;
+    uint64 user_id = 4;
+    google.protobuf.Timestamp start_at = 5;
+    google.protobuf.Duration duration = 6;
+}
+
+message UpdateEventResponse {}
+
+message DeleteEventRequest {
+    uint64 event_id = 1;
+}
+
+message DeleteEventResponse {}

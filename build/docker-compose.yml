@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  calendar_db:
+    image: postgres:10
+    container_name: calendar_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: calendar-api-db
+      POSTGRES_USER: calendar-api-user
+      POSTGRES_PASSWORD: calendar-api-password
+    networks:
+      common_network:
+
+networks:
+  common_network:
